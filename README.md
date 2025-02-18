@@ -52,7 +52,19 @@ To reach the docker with the browser, you can add the domain names to your inter
 .
 .
 .
-.
-.
+```
+
+## Start the container with docker compose
+At first you musst start the traefik 
+```bash
+cd /opt/docker/traefik
+docker compose up -d
+```
+
+After then you can start the docker services.
+```bash
+# IT-Tools
+cd /opt/docker/it-tools
+docker compose up -d
 ```
 
