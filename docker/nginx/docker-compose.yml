@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  nginx:
+    image: nginx:1-alpine
+    labels:
+      traefik.enable: true
+      traefik.docker.network: proxy
+      traefik.http.routers.nginx.tls: true
+      traefik.http.routers.nginx.entrypoints: https
+      traefik.http.routers.nginx.rule: Host(`app.intern.local`)
+      traefik.http.routers.nginx.service: nginx@docker
+      traefik.http.services.nginx.loadbalancer.server.port: 80
+
+    volumes:
+      - ./html5up-stellar/:/usr/share/nginx/html
+    networks:
+      - proxy 
+
+networks:
+  proxy:
+    external: true

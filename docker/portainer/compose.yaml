@@ -1,0 +1,28 @@
+version: "3.3"
+
+services:
+  portainer:
+    image: portainer/portainer-ce:2.21.5
+    command: -H unix:///var/run/docker.sock
+    restart: always
+    ports:
+      - 8443:8000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    labels:
+      traefik.enable: true
+      traefik.docker.network: proxy
+      traefik.http.routers.portainer.tls: true
+      traefik.http.routers.portainer.entrypoints: https
+      traefik.http.routers.portainer.rule: Host(`portainer.intern.local`)
+      traefik.http.routers.portainer.service: portainer
+      traefik.http.services.portainer.loadbalancer.server.port: 9000
+    networks:
+      - proxy
+
+volumes:
+  portainer_data:
+networks:
+  proxy:
+    external: true
