@@ -15,7 +15,7 @@ Here is an example of how to create your own docker lab in your local network wi
 Create your own docker directory and clone this repository. See the example below.
 
 ```bash
-mkir /opt/docker && cd $_
+mkdir /opt/docker && cd $_
 
 git clone https://github.com/mr-jo-reese/docker-lab.git
 ```
@@ -35,7 +35,7 @@ apt install mkcert
 mkcert --install
 
 # Create wilde-card certificat for Traefik
-mkcer *.intern.local
+mkcert *.intern.local
 ```
 The certificates are created in your user home folder.
 
