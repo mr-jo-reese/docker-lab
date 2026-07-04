@@ -5,17 +5,15 @@ services:
     container_name: vaultwarden
     security_opt:
       - no-new-privileges:true
-    restart: unless-stopped
+    restart: always
     environment:
-        # This is required to allow vaultwarden to verify the TLS certificate!
       - DOMAIN=https://vault.intern.lan
-        #  - ADMIN_TOKEN=asdfqwer1234
       - LOGIN_RATELIMIT_MAX_BURST=10
       - LOGIN_RATELIMIT_SECONDS=60
       - ADMIN_RATELIMIT_MAX_BURST=10
       - ADMIN_RATELIMIT_SECONDS=60
-      - ADMIN_TOKEN=asdfqwer1234
       - SENDS_ALLOWED=true
+      - SIGNUPS_ALLOWED=true
       - EMERGENCY_ACCESS_ALLOWED=true
       - WEB_VAULT_ENABLED=true
     volumes:
@@ -25,12 +23,11 @@ services:
       traefik.docker.network: proxy
       traefik.http.routers.vaultwarden.tls: true
       traefik.http.routers.vaultwarden.entrypoints: https
-      traefik.http.routers.vaultwarden.rule: Host(`vault.intern.local`)
+      traefik.http.routers.vaultwarden.rule: Host(`vault.intern.lan`)
       traefik.http.routers.vaultwarden.service: vaultwarden
       traefik.http.services.vaultwarden.loadbalancer.server.port: 80
     networks:
-      - proxy 
-
+      - proxy
 networks:
   proxy:
     external: true
